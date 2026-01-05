@@ -613,6 +613,36 @@ def cmd_mergecompress(parts_dir: str, pattern: str, out_file: str, gap_ms: int, 
         pass
 
     return 0
+  
+def cmd_cleancompresssplit(in_file: str, out_dir: str, minutes: int, gap_ms: int, max_chars: int, rebase: bool, start_at_zero: bool) -> int:
+   
+    in_path = Path(in_file)
+    out_path = Path(out_dir)
+    
+    # Step 1: Clean and fix timestamps
+    lines = read_text_lines(in_path)
+    fixed_lines, _ = fix_vtt_timestamps(lines)
+    
+    fixed_path = in_path.with_name(f"{in_path.stem}_fixed{in_path.suffix}")
+    write_text_lines(fixed_path, fixed_lines)
+    print(f"Clean+fix wrote: {fixed_path}")
+    
+    # Step 2: Compress the fixed file
+    compressed_path = in_path.with_name(f"{in_path.stem}_compressed{in_path.suffix}")
+    cmd_compress(in_file=str(fixed_path), out_file=str(compressed_path), gap_ms=gap_ms, max_chars=max_chars)
+    print(f"Compressed to: {compressed_path}")
+    
+    # Step 3: Split the compressed file
+    result = cmd_split(str(compressed_path), out_dir=out_dir, minutes=minutes, rebase=rebase, start_at_zero=start_at_zero)
+    
+    # Best-effort cleanup of temp files
+    try:
+        fixed_path.unlink()
+        compressed_path.unlink()
+    except Exception:
+        pass
+    
+    return result
 
 
 # ----------------------------
