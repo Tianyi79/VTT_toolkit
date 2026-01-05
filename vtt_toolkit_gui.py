@@ -66,6 +66,7 @@ class App(tk.Tk):
         self._tab_mergecompress(nb)
         self._tab_merge(nb)
         self._tab_compress(nb)
+        self._tab_cleancompresssplit(nb)
 
         log_frame = ttk.Frame(self)
         log_frame.pack(fill="both", expand=True, padx=10, pady=(0, 10))
