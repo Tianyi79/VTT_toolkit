@@ -414,6 +414,19 @@ class App(tk.Tk):
                 "--gap_ms", str(self.mc_gap.get()), "--max_chars", str(self.mc_maxchars.get())]
         self._run_async(args)
 
+    def _run_cleancompresssplit(self):
+        in_file = self.ccs_in.get().strip()
+        out_dir = self.ccs_outdir.get().strip()
+        if not in_file or not out_dir:
+           messagebox.showwarning("Missing", "Select input VTT and output folder.")
+           return
+        args = ["cleancompresssplit", "--in", in_file, "--out_dir", out_dir,
+                "--minutes", str(self.ccs_minutes.get()),
+                "--gap_ms", str(self.ccs_gap.get()),
+                "--max_chars", str(self.ccs_maxchars.get())]
+        if self.ccs_rebase.get():
+            args.append("--rebase")
+        self._run_async(args)
 
 def main():
     App().mainloop()
