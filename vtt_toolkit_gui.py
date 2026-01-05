@@ -241,6 +241,42 @@ class App(tk.Tk):
 
         tab.columnconfigure(1, weight=1)
 
+    def _tab_cleancompresssplit(self, nb):
+        tab = ttk.Frame(nb)
+        nb.add(tab, text="Clean + Compress + Split")
+
+        self.ccs_in = tk.StringVar()
+        self.ccs_outdir = tk.StringVar()
+        self.ccs_minutes = tk.IntVar(value=10)
+        self.ccs_gap = tk.IntVar(value=500)
+        self.ccs_maxchars = tk.IntVar(value=130)
+        self.ccs_rebase = tk.BooleanVar(value=False)
+
+        ttk.Label(tab, text="Input VTT:").grid(row=0, column=0, sticky="w", padx=8, pady=8)
+        ttk.Entry(tab, textvariable=self.ccs_in, width=80).grid(row=0, column=1, sticky="we", padx=8, pady=8)
+        ttk.Button(tab, text="Browse...", command=lambda: self._pick_file(self.ccs_in)).grid(row=0, column=2, padx=8, pady=8)
+
+        ttk.Label(tab, text="Output folder (out_dir):").grid(row=1, column=0, sticky="w", padx=8, pady=8)
+        ttk.Entry(tab, textvariable=self.ccs_outdir, width=80).grid(row=1, column=1, sticky="we", padx=8, pady=8)
+        ttk.Button(tab, text="Browse...", command=lambda: self._pick_dir(self.ccs_outdir)).grid(row=1, column=2, padx=8, pady=8)
+
+        sub1 = ttk.Frame(tab)
+        sub1.grid(row=2, column=1, sticky="w", padx=8, pady=6)
+        ttk.Label(sub1, text="gap_ms:").pack(side="left")
+        ttk.Spinbox(sub1, from_=0, to=10000, textvariable=self.ccs_gap, width=7).pack(side="left", padx=6)
+        ttk.Label(sub1, text="max_chars:").pack(side="left", padx=(10, 0))
+        ttk.Spinbox(sub1, from_=20, to=500, textvariable=self.ccs_maxchars, width=7).pack(side="left", padx=6)
+
+        sub2 = ttk.Frame(tab)
+        sub2.grid(row=3, column=1, sticky="w", padx=8, pady=6)
+        ttk.Label(sub2, text="Minutes per part:").pack(side="left")
+        ttk.Spinbox(sub2, from_=1, to=240, textvariable=self.ccs_minutes, width=6).pack(side="left", padx=8)
+        ttk.Checkbutton(sub2, text="Rebase each part to start at 00:00", variable=self.ccs_rebase).pack(side="left", padx=8)
+
+        ttk.Button(tab, text="Run Clean + Compress + Split", command=self._run_cleancompresssplit).grid(row=4, column=1, sticky="w", padx=8, pady=10)
+
+        tab.columnconfigure(1, weight=1)
+
     # ----- Browse helpers -----
     def _browse_python(self):
         fp = filedialog.askopenfilename(title="Select python executable", filetypes=[("Python", "python*.exe;python*"), ("All files", "*.*")])
