@@ -727,6 +727,9 @@ def main() -> int:
     if args.cmd == "mergecompress":
         return cmd_mergecompress(args.parts_dir, args.pattern, args.out_file, args.gap_ms, args.max_chars)
 
+    if args.cmd == "cleancompresssplit":
+        return cmd_cleancompresssplit(args.in_file, args.out_dir, args.minutes, args.gap_ms, args.max_chars, args.rebase, args.start_at_zero)
+
     raise SystemExit("Unknown command")
 
 
