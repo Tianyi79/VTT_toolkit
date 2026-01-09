@@ -644,6 +644,107 @@ def cmd_cleancompresssplit(in_file: str, out_dir: str, minutes: int, gap_ms: int
     
     return result
 
+# ----------------------------
+# WRAP LINES
+# ----------------------------
+def cmd_wrap(in_file: str, out_file: str, max_chars: int) -> int:
+    """
+    Split long cues into multiple shorter cues (opposite of compress).
+    Each new cue will be ≤ max_chars characters.
+    """
+    in_path = Path(in_file)
+    content = in_path.read_text(encoding="utf-8-sig", errors="replace")
+    lines = content.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+
+    # Parse cues
+    cues: List[Tuple[int, int, str]] = []
+    i = 0
+
+    # Skip header
+    while i < len(lines) and lines[i].strip() == "":
+        i += 1
+    if i < len(lines) and lines[i].lstrip("\ufeff").strip().upper().startswith("WEBVTT"):
+        i += 1
+    while i < len(lines) and lines[i].strip() != "":
+        i += 1
+    while i < len(lines) and lines[i].strip() == "":
+        i += 1
+
+    while i < len(lines):
+        line = lines[i].strip()
+        if not line:
+            i += 1
+            continue
+
+        m = TS_LINE_RE.match(lines[i])
+        if not m:
+            i += 1
+            continue
+
+        start_ms = parse_ts_to_ms(m.group(1).strip())
+        end_ms = parse_ts_to_ms(m.group(2).strip())
+
+        i += 1
+        text_lines: List[str] = []
+        while i < len(lines) and lines[i].strip() != "":
+            text_lines.append(lines[i].strip())
+            i += 1
+
+        txt = clean_text(" ".join(text_lines))
+        cues.append((start_ms, end_ms, txt))
+
+        while i < len(lines) and lines[i].strip() == "":
+            i += 1
+
+    if not cues:
+        raise ValueError("No cues found")
+
+    # Split long cues
+    split_cues: List[Tuple[str, str, str]] = []
+    for start_ms, end_ms, txt in cues:
+        if len(txt) <= max_chars:
+            split_cues.append((ms_to_vtt(start_ms), ms_to_vtt(end_ms), txt))
+        else:
+            words = txt.split()
+            duration_ms = end_ms - start_ms
+            
+            chunks = []
+            current_chunk = []
+            current_len = 0
+            
+            for word in words:
+                word_len = len(word) + (1 if current_chunk else 0)
+                if current_len + word_len <= max_chars:
+                    current_chunk.append(word)
+                    current_len += word_len
+                else:
+                    if current_chunk:
+                        chunks.append(" ".join(current_chunk))
+                    current_chunk = [word]
+                    current_len = len(word)
+            
+            if current_chunk:
+                chunks.append(" ".join(current_chunk))
+            
+            # Distribute time evenly across chunks
+            chunk_duration = duration_ms // len(chunks)
+            for j, chunk in enumerate(chunks):
+                chunk_start = start_ms + j * chunk_duration
+                chunk_end = start_ms + (j + 1) * chunk_duration if j < len(chunks) - 1 else end_ms
+                split_cues.append((ms_to_vtt(chunk_start), ms_to_vtt(chunk_end), chunk))
+
+    # Write output
+    out_lines = ["WEBVTT", ""]
+    for start_ts, end_ts, txt in split_cues:
+        out_lines.append(f"{start_ts} --> {end_ts}")
+        out_lines.append(txt)
+        out_lines.append("")
+
+    Path(out_file).write_text("\n".join(out_lines).strip() + "\n", encoding="utf-8")
+    print(f"Split {len(cues)} cues into {len(split_cues)} cues with max {max_chars} chars. Output: {out_file}")
+    return 0
+
+
 
 # ----------------------------
 # CLI
