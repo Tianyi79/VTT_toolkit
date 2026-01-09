@@ -277,6 +277,33 @@ class App(tk.Tk):
         ttk.Button(tab, text="Run Clean + Compress + Split", command=self._run_cleancompresssplit).grid(row=4, column=1, sticky="w", padx=8, pady=10)
 
         tab.columnconfigure(1, weight=1)
+      
+    def _tab_wrap(self, nb):
+        tab = ttk.Frame(nb)
+        nb.add(tab, text="Wrap (Split Cues)")
+
+        self.wrap_in = tk.StringVar()
+        self.wrap_out = tk.StringVar()
+        self.wrap_maxchars = tk.IntVar(value=130)
+
+        ttk.Label(tab, text="Input VTT:").grid(row=0, column=0, sticky="w", padx=8, pady=8)
+        ttk.Entry(tab, textvariable=self.wrap_in, width=80).grid(row=0, column=1, sticky="we", padx=8, pady=8)
+        ttk.Button(tab, text="Browse...", command=lambda: self._pick_file(self.wrap_in)).grid(row=0, column=2, padx=8, pady=8)
+
+        ttk.Label(tab, text="Output wrapped VTT:").grid(row=1, column=0, sticky="w", padx=8, pady=8)
+        ttk.Entry(tab, textvariable=self.wrap_out, width=80).grid(row=1, column=1, sticky="we", padx=8, pady=8)
+        ttk.Button(tab, text="Save as...", command=lambda: self._save_file(self.wrap_out)).grid(row=1, column=2, padx=8, pady=8)
+
+        sub = ttk.Frame(tab)
+        sub.grid(row=2, column=1, sticky="w", padx=8, pady=6)
+        ttk.Label(sub, text="max_chars:").pack(side="left")
+        ttk.Spinbox(sub, from_=20, to=500, textvariable=self.wrap_maxchars, width=7).pack(side="left", padx=6)
+
+        ttk.Button(tab, text="Run Wrap", command=self._run_wrap).grid(row=3, column=1, sticky="w", padx=8, pady=10)
+
+        tab.columnconfigure(1, weight=1)
+
+  
 
     # ----- Browse helpers -----
     def _browse_python(self):
