@@ -837,6 +837,9 @@ def main() -> int:
     if args.cmd == "cleancompresssplit":
         return cmd_cleancompresssplit(args.in_file, args.out_dir, args.minutes, args.gap_ms, args.max_chars, args.rebase, args.start_at_zero)
 
+    if args.cmd == "wrap":
+        return cmd_wrap(args.in_file, args.out_file, args.max_chars)
+
     raise SystemExit("Unknown command")
 
 
