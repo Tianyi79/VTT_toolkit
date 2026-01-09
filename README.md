@@ -54,6 +54,8 @@ Examples (Windows PowerShell):
   python vtt_toolkit.py mergecompress --parts_dir "parts" --pattern "*english.vtt" --out "merged_english_compressed.vtt"
 
 2. Directly run the `vtt_toolkit_gui.py`:
+
+```powershell
 python vtt_toolkit_gui.py
 
 
