@@ -47,11 +47,23 @@ cd "C:\path\to\your\folder"
 Examples (Windows PowerShell):
 ```
   python vtt_toolkit.py clean --in "input.vtt" --fix
+```
+```
   python vtt_toolkit.py split --in "input_fixed.vtt" --out_dir "parts" --minutes 10
+```
+```
   python vtt_toolkit.py merge --parts_dir "parts" --pattern "*english.vtt" --out "merged_english.vtt"
+```
+```
   python vtt_toolkit.py compress --in "merged_english.vtt" --out "merged_english_compressed.vtt"
+```
+```
   python vtt_toolkit.py wrap --in "input.vtt" --out "output.vtt" --max_chars 130
+```
+```
   python vtt_toolkit.py cleansplit --in "input.vtt" --out_dir "parts" --minutes 10
+```
+```
   python vtt_toolkit.py mergecompress --parts_dir "parts" --pattern "*english.vtt" --out "merged_english_compressed.vtt"
 ```
 
