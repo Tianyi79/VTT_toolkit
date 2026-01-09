@@ -34,6 +34,7 @@ A simple desktop GUI wrapper that lets you run the same operations with buttons:
 
 - Python 3.9+ (3.11 recommended)
 - No external dependencies required (uses standard library only)
+- Save these scripts to the same file
 
 ---
 
