@@ -71,5 +71,6 @@ Examples (Windows PowerShell):
 
 ```powershell
 python vtt_toolkit_gui.py
+```
 
 
