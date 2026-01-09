@@ -52,6 +52,7 @@ Examples (Windows PowerShell):
   python vtt_toolkit.py wrap --in "input.vtt" --out "output.vtt" --max_chars 130
   python vtt_toolkit.py cleansplit --in "input.vtt" --out_dir "parts" --minutes 10
   python vtt_toolkit.py mergecompress --parts_dir "parts" --pattern "*english.vtt" --out "merged_english_compressed.vtt"
+```
 
 2. Directly run the `vtt_toolkit_gui.py`:
 
