@@ -1,7 +1,7 @@
 # VTT Toolkit (vtt_toolkit.py + vtt_toolkit_gui.py)
 
 A lightweight toolkit to **clean / split / merge / compress/ wrap(split cues)** WebVTT (`.vtt`) subtitle files.
-Designed for batch workflows such as: fix messy timestamps → split into 10-minute parts → (translate elsewhere) → merge back → compress into more readable sentences.
+Designed for batch workflows such as: fix messy timestamps → compress into more readable sentences → split into customized length → (translate elsewhere) → merge back → split cues if necessary
 
 ---
 
