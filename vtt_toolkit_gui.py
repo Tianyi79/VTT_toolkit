@@ -456,6 +456,15 @@ class App(tk.Tk):
             args.append("--rebase")
         self._run_async(args)
 
+     def _run_wrap(self):
+        in_file = self.wrap_in.get().strip()
+        out_file = self.wrap_out.get().strip()
+        if not in_file or not out_file:
+           messagebox.showwarning("Missing", "Select input and output files.")
+           return
+        args = ["wrap", "--in", in_file, "--out", out_file, "--max_chars", str(self.wrap_maxchars.get())]
+        self._run_async(args)
+
 def main():
     App().mainloop()
 
