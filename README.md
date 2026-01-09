@@ -43,8 +43,9 @@ A simple desktop GUI wrapper that lets you run the same operations with buttons:
 
 ```powershell
 cd "C:\path\to\your\folder"
-
+```
 Examples (Windows PowerShell):
+```
   python vtt_toolkit.py clean --in "input.vtt" --fix
   python vtt_toolkit.py split --in "input_fixed.vtt" --out_dir "parts" --minutes 10
   python vtt_toolkit.py merge --parts_dir "parts" --pattern "*english.vtt" --out "merged_english.vtt"
