@@ -21,6 +21,8 @@ Examples (Windows PowerShell):
 
   python vtt_toolkit.py cleansplit --in "input.vtt" --out_dir "parts" --minutes 10
   python vtt_toolkit.py mergecompress --parts_dir "parts" --pattern "*english.vtt" --out "merged_english_compressed.vtt"
+  python vtt_toolkit.py wrap --in "input.vtt" --out "output.vtt" --max_chars 130 (default 130)
+  
 
 Notes:
 - This does NOT translate. Translation can be done between split and merge (e.g., via QCLI).
