@@ -47,6 +47,7 @@ cd "C:\path\to\your\folder"
 ```
 Examples (Windows PowerShell):
 
+Clean "input.vtt" to fix timestamp issues, and save the result to the same directory.
 ```  
   python vtt_toolkit.py clean --in "input.vtt" --fix
 ```
