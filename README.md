@@ -51,25 +51,23 @@ Examples (Windows PowerShell):
 ```  
   python vtt_toolkit.py clean --in "input.vtt" --fix
 ```
-- Split the "input_fixed.vtt" into manageable chunks 
+- Split the "input_fixed.vtt" into manageable chunks (e.g. 10mins) and save it into directory ends with parts
 ```
   python vtt_toolkit.py split --in "input_fixed.vtt" --out_dir "parts" --minutes 10
 ```
+- Merge the vtt files end with english.vtt in directory:.../parts, and output the result into "merged_english.vtt"
 ```
   python vtt_toolkit.py merge --parts_dir "parts" --pattern "*english.vtt" --out "merged_english.vtt"
 ```
+- Compress the input file 
 ```
   python vtt_toolkit.py compress --in "merged_english.vtt" --out "merged_english_compressed.vtt"
 ```
+- Split long cues into customized length (e.g. max 80 characters)
 ```
-  python vtt_toolkit.py wrap --in "input.vtt" --out "output.vtt" --max_chars 130
+  python vtt_toolkit.py wrap --in "input.vtt" --out "output.vtt" --max_chars 80
 ```
-```
-  python vtt_toolkit.py cleansplit --in "input.vtt" --out_dir "parts" --minutes 10
-```
-```
-  python vtt_toolkit.py mergecompress --parts_dir "parts" --pattern "*english.vtt" --out "merged_english_compressed.vtt"
-```
+- Clean + compress + split the input file into directory:.../part
 ```
   python vtt_toolkit.py cleancompresssplit --in "input.vtt" --out_dir "part"
 ```
