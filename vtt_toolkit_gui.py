@@ -248,9 +248,9 @@ class App(tk.Tk):
 
         self.ccs_in = tk.StringVar()
         self.ccs_outdir = tk.StringVar()
-        self.ccs_minutes = tk.IntVar(value=10)
+        self.ccs_minutes = tk.IntVar(value=20)
         self.ccs_gap = tk.IntVar(value=500)
-        self.ccs_maxchars = tk.IntVar(value=130)
+        self.ccs_maxchars = tk.IntVar(value=200)
         self.ccs_rebase = tk.BooleanVar(value=False)
 
         ttk.Label(tab, text="Input VTT:").grid(row=0, column=0, sticky="w", padx=8, pady=8)
