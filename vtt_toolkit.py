@@ -799,16 +799,16 @@ def build_parser() -> argparse.ArgumentParser:
     p_ccs = sub.add_parser("cleancompresssplit", help="Convenience: clean+fix, compress, then split.")
     p_ccs.add_argument("--in", dest="in_file", required=True, help="Input .vtt")
     p_ccs.add_argument("--out_dir", required=True, help="Output directory for parts")
-    p_ccs.add_argument("--minutes", type=int, default=10, help="Chunk size in minutes (default 10)")
+    p_ccs.add_argument("--minutes", type=int, default=20, help="Chunk size in minutes (default 20)")
     p_ccs.add_argument("--gap_ms", type=int, default=500, help="Compress: merge if gap <= this (ms). Default 500")
-    p_ccs.add_argument("--max_chars", type=int, default=130, help="Compress: max chars per merged cue. Default 130")
+    p_ccs.add_argument("--max_chars", type=int, default=200, help="Compress: max chars per merged cue. Default 200")
     p_ccs.add_argument("--rebase", action="store_true", help="Rewrite each part's timestamps to start at 00:00")
     p_ccs.add_argument("--start_at_zero", action="store_true", help="Chunking base starts at 00:00 instead of aligning to first cue time")
 
     p_wrap = sub.add_parser("wrap", help="Split long cues into multiple shorter cues (opposite of compress)")
     p_wrap.add_argument("--in", dest="in_file", required=True, help="Input .vtt")
     p_wrap.add_argument("--out", dest="out_file", required=True, help="Output .vtt")
-    p_wrap.add_argument("--max_chars", type=int, default=130, help="Maximum characters per cue (default 130)")
+    p_wrap.add_argument("--max_chars", type=int, default=80, help="Maximum characters per cue (default 80)")
 
   
     return ap
