@@ -47,7 +47,7 @@ cd "C:\path\to\your\folder"
 ```
 Examples (Windows PowerShell):
 
-``` Clean: choose input file to clean the timestamps
+```  
   python vtt_toolkit.py clean --in "input.vtt" --fix
 ```
 ```
