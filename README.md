@@ -47,10 +47,11 @@ cd "C:\path\to\your\folder"
 ```
 Examples (Windows PowerShell):
 
-Clean "input.vtt" to fix timestamp issues, and save the result to the same directory.
+- Clean "input.vtt" to fix timestamp issues, and save the result as "input_fixed.vtt" to the same directory.
 ```  
   python vtt_toolkit.py clean --in "input.vtt" --fix
 ```
+- Split the "input_fixed.vtt" into manageable chunks 
 ```
   python vtt_toolkit.py split --in "input_fixed.vtt" --out_dir "parts" --minutes 10
 ```
